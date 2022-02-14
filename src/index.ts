@@ -6,7 +6,7 @@ const app = express();
 const port = 3000;
 app.use(routes);
 
-app.listen(port, async () => {
+app.listen(port, async (): Promise<void> => {
   await fileSystem.getThumbPath();
   console.log(`server started at localhost:${port}`);
 });

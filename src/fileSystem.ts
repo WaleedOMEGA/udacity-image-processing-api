@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import query from './query.js';
 class fileSystem {
   static fullPath = path.resolve(
     __dirname,
