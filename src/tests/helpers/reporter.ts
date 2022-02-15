@@ -1,5 +1,8 @@
-
-import { DisplayProcessor, SpecReporter, StacktraceOption } from "../../../node_modules/jasmine-spec-reporter/built/main";
+import {
+	DisplayProcessor,
+	SpecReporter,
+	StacktraceOption,
+} from 'jasmine-spec-reporter';
 import SuiteInfo = jasmine.SuiteInfo;
 
 class CustomProcessor extends DisplayProcessor {
