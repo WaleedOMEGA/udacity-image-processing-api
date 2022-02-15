@@ -14,12 +14,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const routes_1 = __importDefault(require("./routes"));
-const fileSystem_js_1 = __importDefault(require("./fileSystem.js"));
+const fileSystem_1 = __importDefault(require("./fileSystem"));
 const app = (0, express_1.default)();
 const port = 3000;
 app.use(routes_1.default);
+// main function
 app.listen(port, () => __awaiter(void 0, void 0, void 0, function* () {
-    yield fileSystem_js_1.default.getThumbPath();
+    yield fileSystem_1.default.getThumbPath();
     console.log(`server started at localhost:${port}`);
 }));
 exports.default = app;

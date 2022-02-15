@@ -14,9 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = require("fs");
 const path_1 = __importDefault(require("path"));
-const convertImage_js_1 = __importDefault(require("./convertImage.js"));
+const convertImage_1 = __importDefault(require("./convertImage"));
 class fileSystem {
-    // get Path
+    // get Path for thumb or full
     static getPath(params) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!params.fileName) {
@@ -36,7 +36,7 @@ class fileSystem {
             }
         });
     }
-    // get thumb path
+    // get path for thumbnails
     static getThumbPath() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -59,6 +59,7 @@ class fileSystem {
                 .includes(fileName);
         });
     }
+    // check thumbnail exists
     static checkThumb(params) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!params.fileName || !params.width || !params.height) {
@@ -75,6 +76,7 @@ class fileSystem {
             }
         });
     }
+    // convert thumbnail
     static createThumb(params) {
         return __awaiter(this, void 0, void 0, function* () {
             if (!params.fileName || !params.width || !params.height) {
@@ -84,7 +86,7 @@ class fileSystem {
             const thumbPath = path_1.default.resolve(fileSystem.thumbPath, `${params.fileName}-${params.width}x${params.height}.jpg`);
             console.log(`Creating thumb ${thumbPath}`);
             // convert image
-            return yield (0, convertImage_js_1.default)({
+            return yield (0, convertImage_1.default)({
                 source: fullPath,
                 target: thumbPath,
                 width: parseInt(params.width),
@@ -93,6 +95,7 @@ class fileSystem {
         });
     }
 }
+// paths
 fileSystem.fullPath = path_1.default.resolve(__dirname, '../assets/images/full');
 fileSystem.thumbPath = path_1.default.resolve(__dirname, '../assets/images/thumb');
 exports.default = fileSystem;

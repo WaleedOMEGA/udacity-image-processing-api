@@ -1,6 +1,7 @@
-import sharp from "sharp";
-import sharpParams from "./sharpParam";
+import sharp from 'sharp';
+import sharpParams from './sharpParam';
 
+// resize image with sharp
 const convertImage = async (
   params: sharpParams,
 ): Promise<null | string> => {

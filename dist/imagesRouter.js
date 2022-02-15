@@ -13,8 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const fileSystem_js_1 = __importDefault(require("./fileSystem.js"));
+const fileSystem_1 = __importDefault(require("./fileSystem"));
 const imagesRouter = express_1.default.Router();
+// main api
 imagesRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const message = yield validateReq(req.query);
     if (message) {
@@ -23,8 +24,8 @@ imagesRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
     let error = '';
     // create thumb if not exist
-    if (!(yield fileSystem_js_1.default.checkThumb(req.query))) {
-        error = yield fileSystem_js_1.default.createThumb(req.query);
+    if (!(yield fileSystem_1.default.checkThumb(req.query))) {
+        error = yield fileSystem_1.default.createThumb(req.query);
     }
     // Handle image processing error
     if (error) {
@@ -32,7 +33,7 @@ imagesRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         return;
     }
     // Retrieve appropriate image path and display image
-    const path = yield fileSystem_js_1.default.getPath(req.query);
+    const path = yield fileSystem_1.default.getPath(req.query);
     if (path) {
         res.sendFile(path);
     }
@@ -40,16 +41,20 @@ imagesRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.send('we encountered an error');
     }
 }));
+// validate params given
 const validateReq = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const width = parseInt(query.width || '');
     const height = parseInt(query.height || '');
-    if (!(yield fileSystem_js_1.default.checkImage(query.fileName))) {
+    if (!(yield fileSystem_1.default.checkImage(query.fileName))) {
         return 'filename may be wrong';
     }
     if (!query.width && !query.height) {
         return null;
     }
-    if (Number.isNaN(width) || width < 1 || Number.isNaN(height) || height < 1) {
+    if (Number.isNaN(width) ||
+        width < 1 ||
+        Number.isNaN(height) ||
+        height < 1) {
         return 'width and height must be positive numbers';
     }
     return null;

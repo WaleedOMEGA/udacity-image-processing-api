@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sharp_1 = __importDefault(require("sharp"));
+// resize image with sharp
 const convertImage = (params) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, sharp_1.default)(params.source)

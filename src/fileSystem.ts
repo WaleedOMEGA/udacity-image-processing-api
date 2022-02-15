@@ -3,13 +3,14 @@ import path from 'path';
 import convertImage from './convertImage';
 import query from './query';
 class fileSystem {
+  // paths
   static fullPath = path.resolve(__dirname, '../assets/images/full');
   static thumbPath = path.resolve(
     __dirname,
     '../assets/images/thumb',
   );
 
-  // get Path
+  // get Path for thumb or full
   static async getPath(params: query): Promise<null | string> {
     if (!params.fileName) {
       return null;
@@ -32,7 +33,7 @@ class fileSystem {
       return null;
     }
   }
-  // get thumb path
+  // get path for thumbnails
   static async getThumbPath() {
     try {
       await fs.access(fileSystem.thumbPath);
@@ -43,7 +44,7 @@ class fileSystem {
   }
 
   // check fullimage exist
-  static async checkImage(fileName: string = '') {
+  static async checkImage(fileName = '') {
     if (!fileName) {
       return false;
     }
@@ -51,7 +52,7 @@ class fileSystem {
       .map((fileName) => fileName.split('.')[0])
       .includes(fileName);
   }
-
+  // check thumbnail exists
   static async checkThumb(params: query): Promise<boolean> {
     if (!params.fileName || !params.width || !params.height) {
       return false;
@@ -70,7 +71,7 @@ class fileSystem {
       return false;
     }
   }
-
+  // convert thumbnail
   static async createThumb(params: query): Promise<null | string> {
     if (!params.fileName || !params.width || !params.height) {
       return null;
