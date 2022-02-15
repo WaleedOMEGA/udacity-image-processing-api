@@ -1,6 +1,6 @@
 import express from 'express';
-import fileSystem from './fileSystem.js';
-import query from './query.js'
+import fileSystem from './fileSystem';
+import query from './query'
 const imagesRouter = express.Router();
 
 imagesRouter.get('/', async (req, res): Promise<void> => {
@@ -9,6 +9,27 @@ imagesRouter.get('/', async (req, res): Promise<void> => {
         res.send(message);
         return;
     }
+     let error: null | string = '';
+
+    // create thumb if not exist
+    if (!(await fileSystem.checkThumb(req.query))) {
+      error = await fileSystem.createThumb(req.query);
+    }
+
+    // Handle image processing error
+    if (error) {
+      res.send(error);
+      return;
+    }
+
+    // Retrieve appropriate image path and display image
+    const path: null | string = await fileSystem.getPath(req.query);
+    if (path) {
+      res.sendFile(path);
+    } else {
+      res.send('we encountered an error');
+    }
+  
 });
 
 const validateReq = async (query: query): Promise<null | string> => {
@@ -24,6 +45,7 @@ const validateReq = async (query: query): Promise<null | string> => {
     return 'width and height must be positive numbers'
 }
     return null
+
 };
 
 

@@ -1,6 +1,6 @@
 import express from 'express';
-import routes from './routes.js';
-import fileSystem from './fileSystem.js';
+import routes from './routes';
+import fileSystem from './fileSystem';
 
 const app = express();
 const port = 3000;
