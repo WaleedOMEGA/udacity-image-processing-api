@@ -2,19 +2,19 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import fileSystem from './../fileSystem';
 
-describe('Test image processing via sharp', (): void => {
-  it('raises an error (invalid width value)', async (): Promise<void> => {
+describe('test image converting by sharp', (): void => {
+  it('throw error (invalid height value)', async (): Promise<void> => {
     const error: null | string = await fileSystem.createThumb({
-      fileName: 'foo',
-      width: '-100',
-      height: '500',
+      fileName: 'icelandwaterfall',
+      width: '200',
+      height: '-200',
     });
     expect(error).not.toBeNull();
   });
 
-  it('raises an error (filename does not exist)', async (): Promise<void> => {
+  it('throw error (filename does not exist)', async (): Promise<void> => {
     const error: null | string = await fileSystem.createThumb({
-      fileName: 'foo',
+      fileName: 'omega',
       width: '100',
       height: '500',
     });
@@ -25,13 +25,13 @@ describe('Test image processing via sharp', (): void => {
   it('succeeds to write resized thumb file (existing file, valid size values)', async (): Promise<void> => {
     await fileSystem.createThumb({
       fileName: 'fjord',
-      width: '99',
-      height: '99',
+      width: '200',
+      height: '200',
     });
 
     const resizedImagePath: string = path.resolve(
       fileSystem.thumbPath,
-      `fjord-99x99.jpg`,
+      `fjord-200x200.jpg`,
     );
     let errorFile: null | string = '';
 
@@ -46,17 +46,3 @@ describe('Test image processing via sharp', (): void => {
   });
 });
 
-// Erase test file. Test should not run on productive system to avoid cache loss
-afterAll(async (): Promise<void> => {
-  const convertedImagePath: string = path.resolve(
-    fileSystem.thumbPath,
-    'fjord-99x99.jpg',
-  );
-
-  try {
-    await fs.access(convertedImagePath);
-    fs.unlink(convertedImagePath);
-  } catch {
-    // intentionally left blank
-  }
-});

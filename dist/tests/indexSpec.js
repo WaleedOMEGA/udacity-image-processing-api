@@ -12,28 +12,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const request = require('supertest');
-const fs_1 = require("fs");
-const path_1 = __importDefault(require("path"));
-const fileSystem_1 = __importDefault(require("./../fileSystem"));
-describe('Test responses from endpoints', () => {
-    describe('endpoint: /', () => {
+const supertest_1 = __importDefault(require("supertest"));
+const index_1 = __importDefault(require("../index"));
+const request = (0, supertest_1.default)(index_1.default);
+describe('test responses from api', () => {
+    describe('api: /', () => {
         it('gets /', () => __awaiter(void 0, void 0, void 0, function* () {
             const res = yield request.get('/');
             expect(res.status).toBe(200);
         }));
     });
-    describe('endpoint: /api/images', () => {
-        it('gets /api/images?filename=fjord (valid args)', () => __awaiter(void 0, void 0, void 0, function* () {
-            const res = yield request.get('/api/images?filename=fjord');
+    describe('api: /api/images', () => {
+        it('gets /api/images?filename=icelandwaterfall (valid args)', () => __awaiter(void 0, void 0, void 0, function* () {
+            const res = yield request.get('/api/images?filename=icelandwaterfall');
             expect(res.status).toBe(200);
         }));
-        it('gets /api/images?filename=fjord&width=199&height=199 (valid args)', () => __awaiter(void 0, void 0, void 0, function* () {
-            const res = yield request.get('/api/images?filename=fjord&width=199&height=199');
+        it('gets /api/images?filename=icelandwaterfall&width=200&height=200 (valid args)', () => __awaiter(void 0, void 0, void 0, function* () {
+            const res = yield request.get('/api/images?filename=icelandwaterfall&width=200&height=200');
             expect(res.status).toBe(200);
         }));
-        it('gets /api/images?filename=fjord&width=-200&height=200 (invalid args)', () => __awaiter(void 0, void 0, void 0, function* () {
-            const res = yield request.get('/api/images?filename=fjord&width=-200&height=200');
+        it('gets /api/images?filename=icelandwaterfall&width=-200&height=200 (invalid args)', () => __awaiter(void 0, void 0, void 0, function* () {
+            const res = yield request.get('/api/images?filename=icelandwaterfall&width=-200&height=200');
             expect(res.status).toBe(200);
         }));
         it('gets /api/images (no arguments)', () => __awaiter(void 0, void 0, void 0, function* () {
@@ -41,21 +40,10 @@ describe('Test responses from endpoints', () => {
             expect(res.status).toBe(200);
         }));
     });
-    describe('endpoint: /foo', () => {
+    describe('endpoint: /omega', () => {
         it('returns 404 for invalid endpoint', () => __awaiter(void 0, void 0, void 0, function* () {
-            const res = yield request.get('/foo');
+            const res = yield request.get('/omega');
             expect(res.status).toBe(404);
         }));
     });
 });
-// Erase test file. Test should not run on productive system to avoid cache loss
-afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
-    const convertedImagePath = path_1.default.resolve(fileSystem_1.default.thumbPath, 'fjord-199x199.jpg');
-    try {
-        yield fs_1.promises.access(convertedImagePath);
-        fs_1.promises.unlink(convertedImagePath);
-    }
-    catch (_a) {
-        // intentionally left blank
-    }
-}));
