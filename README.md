@@ -22,6 +22,6 @@ this project aims to convert images from full size to any size you want
 http://localhost:3000/api/images
 
 #### Example
-<http://localhost:3000/api/images?filename=icelandwaterfall&width=200&height=200>
+<http://localhost:3000/api/images?fileName=icelandwaterfall&width=200&height=200>
 Will scale the icelandwaterfall image to 200 by 200 pixels and store the resulting image.
 and if you call it again it will get the resulting image from cashing instead of converting this image again.
