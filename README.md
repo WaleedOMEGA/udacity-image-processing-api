@@ -10,16 +10,16 @@ this project aims to convert images from full size to any size you want
 # Scripts
 
 - Install: ```npm install```
-- Build: ```npm run build```
+- build and run tests: ```npm run test```
 - Lint: ```npm run lint```
 - Prettify: ```npm run prettify```
-- Run unit tests: ```npm run test```
+
 - Start server: ```npm run start```
 
 ## The server will listen on port 3000
-
-### api endpoint for converting images
 <http://localhost:3000/api/images>
+### api endpoint for converting images
+http://localhost:3000/api/images
 
 #### Example
 <http://localhost:3000/api/images?filename=icelandwaterfall&width=200&height=200>
